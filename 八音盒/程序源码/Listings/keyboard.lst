@@ -1,0 +1,134 @@
+C51 COMPILER V9.54   KEYBOARD                                                              05/12/2023 21:51:07 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE KEYBOARD
+OBJECT MODULE PLACED IN .\Objects\keyboard.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE HARDWARE\kayboard\keyboard.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\HARDWARE\
+                    -kayboard;.\HARDWARE\LED;.\SYSTEM\Delay;.\SYSTEM\music;.\SYSTEM\Timer;.\SYSTEM\51sys) DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\keyboard.lst) OBJECT(.\Objects\keyboard.obj)
+
+line level    source
+
+   1          #include "keyboard.h"
+   2          #include "Delay.h"
+   3          #include "REGX52.h"
+   4          #include "LED.h"
+   5          
+   6          uchar mode;     //频率模式
+   7          
+   8          /*按键检测*/
+   9          int input(void)
+  10          {
+  11   1      
+  12   1          uchar button;
+  13   1          P1 = 0xFF;
+  14   1          
+  15   1          if(MusicSelect == 0)//判断是否在显示歌词
+  16   1          {
+  17   2              led_display(1,mode);//显示初始频率模式
+  18   2          }
+  19   1      
+  20   1          P1 = 0xf0;                      //列输入
+  21   1          if(0xf0 != (P1 & 0xf0))           //识别列是否有按键按下
+  22   1          {
+  23   2              Delay(10);                
+  24   2              if(0xf0 != (button = P1 & 0xf0))   //再次识别列输入并发送列码
+  25   2              {
+  26   3                  P1 = 0x0F;              //行输入
+  27   3                  button |= (P1&0x0f);       //取行码与列码组合
+  28   3                                              
+  29   3                  while(P1 != 0x0F)   //判断按键是否松开
+  30   3                  {
+  31   4                                      P1 = 0x0F;
+  32   4                  }
+  33   3                  switch(button)             //判断那个按键
+  34   3                  {                        
+  35   4                      case 0x77:
+  36   4                          TR0 = 1;
+  37   4                          FreqSelect = 1 + (mode * 12); 
+  38   4                          break;   //S1
+  39   4                      case 0x7B:
+  40   4                          TR0 = 1;
+  41   4                          FreqSelect = 3 + (mode * 12); 
+  42   4                          break;   //S2
+  43   4                      case 0x7D:
+  44   4                          TR0 = 1;
+  45   4                          FreqSelect = 5 + (mode * 12); 
+  46   4                          break;   //S3
+  47   4                      case 0x7E:
+  48   4                          TR0 = 1;
+  49   4                          FreqSelect = 6 + (mode * 12);
+  50   4                          break;   //S4
+  51   4                      case 0xB7:
+  52   4                          TR0 = 1;
+  53   4                          FreqSelect = 8 + (mode * 12); 
+C51 COMPILER V9.54   KEYBOARD                                                              05/12/2023 21:51:07 PAGE 2   
+
+  54   4                          break;   //S5
+  55   4                      case 0xBB:
+  56   4                          TR0 = 1;
+  57   4                          FreqSelect = 10 + (mode * 12); 
+  58   4                          break;   //S6
+  59   4                      case 0xBD:
+  60   4                          TR0 = 1;
+  61   4                          FreqSelect = 12 + (mode * 12); 
+  62   4                          break;   //S7
+  63   4                      case 0xBE:  
+  64   4                                              mode ++;    //频率调节
+  65   4                                              if(mode > 2)
+  66   4                                              {
+  67   5                                                      mode = 0;
+  68   5                                              }
+  69   4      
+  70   4                          TR1 = 0;
+  71   4                          P0=0x00;//消影
+  72   4                          led_display(1,mode);
+  73   4      
+  74   4                          Delay(500);
+  75   4                          if(MusicSelect != 0)//判断是否在显示歌词
+  76   4                          {
+  77   5                              TR1 = 1;
+  78   5                          }
+  79   4      
+  80   4                                              FreqSelect = 0;
+  81   4                          break;   //S8
+  82   4                      case 0xD7:  
+  83   4                          changemusic = !changemusic;
+  84   4                          MusicSelect = 0;
+  85   4                          TR1 = 0;
+  86   4                          P0=0x00;//消影
+  87   4                          led_display(2,changemusic + 1);
+  88   4      
+  89   4                          Delay(500);
+  90   4                          if(MusicSelect != 0)//判断是否在显示歌词
+  91   4                          {
+  92   5                              TR1 = 1;
+  93   5                          }
+  94   4      
+  95   4                                              FreqSelect = 0;
+  96   4                          break;   //S9
+  97   4                      default: 
+  98   4                          return 0;
+  99   4                          break;
+ 100   4                  }
+ 101   3              }
+ 102   2          } 
+ 103   1                      P1 = 0xFF;
+ 104   1                      return FreqSelect;
+ 105   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    310    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.54   KEYBOARD                                                              05/12/2023 21:51:07 PAGE 3   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

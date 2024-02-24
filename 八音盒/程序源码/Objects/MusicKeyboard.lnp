@@ -1,0 +1,7 @@
+".\Objects\main.obj",
+".\Objects\keyboard.obj",
+".\Objects\LED.obj",
+".\Objects\Delay.obj",
+".\Objects\Timer0.obj" 
+TO ".\Objects\MusicKeyboard" 
+PRINT(".\Listings\MusicKeyboard.m51") RAMSIZE(256) 

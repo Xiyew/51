@@ -1,0 +1,42 @@
+{
+    "configurations": [
+        {
+            "name": "Target 1",
+            "includePath": [
+                "c:\\Users\\inside\\Desktop\\电子线路综合设计\\电子琴3_0\\HARDWARE\\kayboard",
+                "c:\\Users\\inside\\Desktop\\电子线路综合设计\\电子琴3_0\\HARDWARE\\LED",
+                "c:\\Users\\inside\\Desktop\\电子线路综合设计\\电子琴3_0\\SYSTEM\\Delay",
+                "c:\\Users\\inside\\Desktop\\电子线路综合设计\\电子琴3_0\\SYSTEM\\music",
+                "c:\\Users\\inside\\Desktop\\电子线路综合设计\\电子琴3_0\\SYSTEM\\Timer",
+                "c:\\Users\\inside\\Desktop\\电子线路综合设计\\电子琴3_0\\SYSTEM\\51sys",
+                "c:\\Users\\inside\\Desktop\\电子线路综合设计\\电子琴3_0\\USER"
+            ],
+            "defines": [
+                "__C51__",
+                "__VSCODE_C51__",
+                "reentrant=",
+                "compact=",
+                "small=",
+                "large=",
+                "data=",
+                "idata=",
+                "pdata=",
+                "bdata=",
+                "xdata=",
+                "code=",
+                "bit=char",
+                "sbit=char",
+                "sfr=char",
+                "sfr16=int",
+                "sfr32=int",
+                "interrupt=",
+                "using=",
+                "_at_=",
+                "_priority_=",
+                "_task_="
+            ],
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}
